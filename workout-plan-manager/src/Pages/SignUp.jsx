@@ -110,6 +110,7 @@ export default function SignUpPage() {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [role, setRole] = useState('user'); // State for user role
+  const [showCreateForm, setShowCreateForm] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {

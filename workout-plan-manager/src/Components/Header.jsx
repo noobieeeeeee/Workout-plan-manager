@@ -90,13 +90,35 @@ export default function Header({ isLoggedIn, onLogout }: HeaderProps) {
     }
   }, [isLoggedIn]);
 
-  const handleLogoutClick = () => {
-    // Clear user session data
-    sessionStorage.removeItem("user");
-    onLogout();
-    navigate('/login');
+  // const handleLogoutClick = () => {
+  //   // Clear user session data
+  //   sessionStorage.removeItem("user");
+  //   onLogout();
+  //   navigate('/login');
+  // };
+  const handleLogoutClick = async () => {
+    try {
+      // Make a request to the backend to clear the server-side session
+      const response = await fetch('http://localhost:5000/logout', {
+        method: 'POST',
+        credentials: 'include', // Ensure cookies are included
+      });
+  
+      if (response.ok) {
+        // Clear client-side session data
+        sessionStorage.removeItem("userId");
+        console.log(localStorage.getItem('userId'));
+        onLogout();
+        console.log("logout successful")
+        navigate('/login');
+      } else {
+        console.error("Failed to log out. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
-
+  
   return (
     <header style={styles.header}>
       <a href="/" style={styles.logo}>
@@ -120,17 +142,17 @@ export default function Header({ isLoggedIn, onLogout }: HeaderProps) {
         <span>FitLife Gym</span>
       </a>
       <nav style={styles.nav}>
-        <a href="/classes" style={styles.navLink}>
-          Classes
+        <a href="/workoutplans" style={styles.navLink}>
+          Exercises
+        </a>
+        <a href="/dietplans" style={styles.navLink}>
+          Diet 
+        </a>
+        <a href="/dashboard" style={styles.navLink}>
+          Dashboard
         </a>
         <a href="/trainers" style={styles.navLink}>
           Trainers
-        </a>
-        <a href="/membership" style={styles.navLink}>
-          Membership
-        </a>
-        <a href="/contact" style={styles.navLink}>
-          Contact
         </a>
       </nav>
       <div style={styles.authButtons}>
