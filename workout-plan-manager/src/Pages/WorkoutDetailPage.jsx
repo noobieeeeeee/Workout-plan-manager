@@ -129,7 +129,7 @@ export default function WorkoutDetailPage() {
 
     if (workoutPlan.videoUrl) {
       const videoId = workoutPlan.videoUrl.split('v=')[1];
-      const apiKey = 'AIzaSyB-yvqQlQQ789HlxNqHUAAwH5kh52p01Bs'; // Replace with your actual YouTube API key
+      const apiKey = 'youtube-api-key'; // Replace with your actual YouTube API key
 
       fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiKey}`)
         .then((res) => res.json())
